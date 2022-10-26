@@ -1,0 +1,72 @@
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Informe a loja</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Loja</mat-label>
+        <mat-select formControlName="firstCtrl" required>
+          <mat-option value="02">02 - São Bernardo</mat-option>
+          <mat-option value="03">03 - Ipiranga</mat-option>
+          <mat-option value="48">48 - Juscelino</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Informe a placa</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Placa</mat-label>
+        <input matInput formControlName="secondCtrl" placeholder="ABC1234, ABC1D34" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Voltar</button>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Fotos do veículo</ng-template>
+      <webcam
+        [width]=300
+        [trigger]="invokeObservable"
+        (imageCapture)="captureImg($event)">
+      </webcam>
+      <div>
+        <button
+          mat-fab color="primary"
+          aria-label="Capturar"
+          (click)="getSnapshot()">
+          <mat-icon>photo</mat-icon>
+        </button>
+      </div>
+      <div>
+        <p *ngFor="let image of images; index as i">
+          <img [src]="image" height="100px" (click)="images.splice(i, 1)"/>
+        </p>
+      </div> 
+    <div>
+      <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-button matStepperNext>Próximo</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>Tudo pronto</p>
+    <div>
+      <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button
+        mat-fab color="primary"
+        aria-label="Enviar"
+        (click)="sendForm()"
+        [disabled]="firstFormGroup.invalid || secondFormGroup.invalid">
+        <mat-icon>upload</mat-icon>
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>
