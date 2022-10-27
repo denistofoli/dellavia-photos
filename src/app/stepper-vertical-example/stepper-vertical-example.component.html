@@ -1,4 +1,4 @@
-<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+<mat-stepper [orientation]="orientationCuston" [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Informe a loja</ng-template>
@@ -11,7 +11,7 @@
         </mat-select>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Próximo</button>
+        <button mat-button matStepperNext><mat-icon>skip_next</mat-icon></button>
       </div>
     </form>
   </mat-step>
@@ -20,11 +20,11 @@
       <ng-template matStepLabel>Informe a placa</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Placa</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="ABC1234, ABC1D34" required>
+        <input matInput formControlName="secondCtrl" placeholder="ABC1D34" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Voltar</button>
-        <button mat-button matStepperNext>Próximo</button>
+        <button mat-button matStepperPrevious><mat-icon>skip_previous</mat-icon></button>
+        <button mat-button matStepperNext><mat-icon>skip_next</mat-icon></button>
       </div>
     </form>
   </mat-step>
@@ -32,7 +32,7 @@
   <mat-step>
     <ng-template matStepLabel>Fotos do veículo</ng-template>
       <webcam
-        [width]=300
+        [width]="cameraSize"
         [trigger]="invokeObservable"
         (imageCapture)="captureImg($event)">
       </webcam>
@@ -50,16 +50,16 @@
         </p>
       </div> 
     <div>
-      <button mat-button matStepperPrevious>Voltar</button>
-      <button mat-button matStepperNext>Próximo</button>
-    </div>
+      <button mat-button matStepperPrevious><mat-icon>skip_previous</mat-icon></button>
+      <button mat-button matStepperNext><mat-icon>skip_next</mat-icon></button>
+  </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>Tudo pronto</p>
     <div>
-      <button mat-button matStepperPrevious>Voltar</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="stepper.reset()"><mat-icon>replay</mat-icon></button>
+      <button mat-button matStepperPrevious><mat-icon>skip_previous</mat-icon></button>
       <button
         mat-fab color="primary"
         aria-label="Enviar"
